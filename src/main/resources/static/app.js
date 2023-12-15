@@ -1,12 +1,19 @@
+const URL = 'ws://localhost:8080/websocket';
+const TOPIC = '/topic/greetings';
+const MESSAGE = 'message';
+const APP =  "/app/hello";
+
+
+
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+    brokerURL: URL
 });
 
 stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/greetings', (greeting) => {
-        showGreeting(JSON.parse(greeting.body).content);
+    stompClient.subscribe(TOPIC, (greeting) => {
+        showGreeting(JSON.parse(greeting.body).context);
     });
 };
 
@@ -15,7 +22,7 @@ stompClient.onWebSocketError = (error) => {
 };
 
 stompClient.onStompError = (frame) => {
-    console.error('Broker reported error: ' + frame.headers['message']);
+    console.error('Broker reported error: ' + frame.headers[MESSAGE]);
     console.error('Additional details: ' + frame.body);
 };
 
@@ -43,7 +50,7 @@ function disconnect() {
 
 function sendName() {
     stompClient.publish({
-        destination: "/app/hello",
+        destination: APP,
         body: JSON.stringify({'name': $("#name").val()})
     });
 }

@@ -2,7 +2,7 @@ package com.example.chat.controller;
 
 
 import com.example.chat.models.GreetingEntity;
-import com.example.chat.models.HelloMessage;
+import com.example.chat.models.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,9 @@ public class GreetingController {
 
     @MessageMapping(HELLO)
     @SendTo(TP)
-    public GreetingEntity greeting(HelloMessage message) throws Exception {
+    public GreetingEntity greeting(Message message) throws Exception {
         Thread.sleep(1000);
-        return new GreetingEntity("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+        return new GreetingEntity("Hello, " + HtmlUtils.htmlEscape(message.name()) + "!");
     }
 }
 

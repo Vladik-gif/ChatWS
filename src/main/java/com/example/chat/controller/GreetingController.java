@@ -18,7 +18,7 @@ public class GreetingController {
     @SendTo(TP)
     public GreetingEntity greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000);
-        return new GreetingEntity("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+        return new GreetingEntity("Hello, " + HtmlUtils.htmlEscape(message.name()) + "!");
     }
 }
 
